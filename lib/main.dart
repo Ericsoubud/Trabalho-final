@@ -1,244 +1,125 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(QuizApp());
+  runApp(const MyApp());
 }
 
-class QuizApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Quiz Futebol',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePage(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Quiz Futebol'),
-      ),
-      backgroundColor: const Color.fromARGB(255, 147, 22, 219),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0EDgg7Pu2xXXUy3I6N7Gp42BIOLUBKNTOBZGT4OQBmebQSpdulx8FlOCfF_xwpy2oKGE&usqp=CAU',
-              height: 300,
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuizPage()),
-                );
-              },
-              child: Text('Iniciar Quiz', style: TextStyle(fontSize: 24)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class QuizPage extends StatefulWidget {
-  @override
-  _QuizPageState createState() => _QuizPageState();
-}
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
 
-class _QuizPageState extends State<QuizPage> {
-  int _currentQuestionIndex = 0;
-  int _score = 0;
-  String _feedbackMessage = '';
-  Color _feedbackColor = Colors.black;
-
-  final List<Map<String, dynamic>> _questions = [
-    {
-      'question': '1- Quem ganhou o Ballon Dor 2024?',
-      'options': ['Vinicius Jr', 'Messi', 'Rodri', 'Neymar Jr'],
-      'answer': 2
-    },
-    {
-      'question': '2- Quem é o líder do campeonato brasileiro atualmente?',
-      'options': ['Botafogo', 'Bahia', 'Vasco', 'Flamengo'],
-      'answer': 0
-    },
-    {
-      'question': '3- Quantos times são rebaixados no campeonato brasileiro?',
-      'options': ['5', '4', '7', '3'],
-      'answer': 1
-    },
-    {
-      'question': '4- Quem ganhou o Golden Boy 2024?',
-      'options': ['Lamine Yamal', 'Pedri', 'Gavi', 'Neymar Jr'],
-      'answer': 0
-    },
-    {
-      'question': '5- Quem ganhou o prêmio Puskás 2015?',
-      'imagem': 'lib/assets/comebol.png',
-      'options': [
-        'Wendell Lira',
-        'Neymar Jr',
-        'Cristiano Ronaldo',
-        'Fernando Torres'
-      ],
-      'answer': 0
-    },
-    {
-      'question': '6- Qual time foi campeão da UEFA Champions League 2015?',
-      'options': ['Real Madrid', 'Barcelona', 'Juventus', 'Arsenal'],
-      'answer': 1
-    },
-    {
-      'question':
-          '7- Quantos títulos da UEFA Champions League o Barcelona tem?',
-      'options': ['5', '6', '12', '15'],
-      'answer': 0
-    },
-    {
-      'question': '8- Qual seleção ganhou a Copa do Mundo de 2018?',
-      'options': ['França', 'Brasil', 'Bélgica', 'Alemanha'],
-      'answer': 0
-    },
-    {
-      'question': '9- Quantas Bolas de Ouro Cristiano Ronaldo tem?',
-      'options': ['5', '6', '12', '15'],
-      'answer': 0
-    },
-    {
-      'question':
-          '10- Qual time se consagrou campeão da Copa Libertadores da América em 2019?',
-      'options': ['River Plate', 'Flamengo', 'Palmeiras', 'Bolívar'],
-      'answer': 1
-    }
-  ];
-
-  void _answerQuestion(int selectedOption) {
-    if (_currentQuestionIndex < _questions.length) {
-      // Verifica se a resposta está correta
-      if (selectedOption == _questions[_currentQuestionIndex]['answer']) {
-        _score++;
-        setState(() {
-          _feedbackMessage = 'Resposta correta!';
-          _feedbackColor = Colors.green;
-        });
-      } else {
-        setState(() {
-          _feedbackMessage = 'Resposta errada!';
-          _feedbackColor = Colors.red;
-        });
-      }
-
-      // Delay para mostrar feedback antes de passar para a próxima questão
-      Future.delayed(Duration(seconds: 1), () {
-        setState(() {
-          _currentQuestionIndex++;
-          _feedbackMessage = ''; // Limpa a mensagem para a próxima pergunta
-        });
-      });
-
-      if (_currentQuestionIndex >= _questions.length) {
-        Future.delayed(Duration(seconds: 1), _showScoreDialog);
-      }
-    }
-  }
-
-  void _showScoreDialog() {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text('Quiz Concluído!'),
-        content:
-            Text('Você acertou $_score de ${_questions.length} perguntas.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _resetQuiz();
-            },
-            child: Text('Tentar Novamente'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _resetQuiz() {
+  void _incrementCounter() {
     setState(() {
-      _score = 0;
-      _currentQuestionIndex = 0;
-      _feedbackMessage = '';
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz Futebol'),
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
       ),
-      body: _currentQuestionIndex < _questions.length
-          ? _buildQuizQuestion()
-          : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Parabéns! Você concluiu o quiz!',
-                    style: TextStyle(fontSize: 24),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  Image.network(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0EDgg7Pu2xXXUy3I6N7Gp42BIOLUBKNTOBZGT4OQBmebQSpdulx8FlOCfF_xwpy2oKGE&usqp=CAU',
-                    height: 200,
-                  ),
-                ],
-              ),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          //
+          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+          // action in the IDE, or press "p" in the console), to see the
+          // wireframe for each widget.
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
             ),
-    );
-  }
-
-  Widget _buildQuizQuestion() {
-    final question = _questions[_currentQuestionIndex];
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Image.network(
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0EDgg7Pu2xXXUy3I6N7Gp42BIOLUBKNTOBZGT4OQBmebQSpdulx8FlOCfF_xwpy2oKGE&usqp=CAU',
-            height: 150,
-          ),
-          SizedBox(height: 20),
-          Text(
-            question['question'],
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20),
-          ...List.generate(question['options'].length, (index) {
-            return ElevatedButton(
-              onPressed: () => _answerQuestion(index),
-              child: Text(question['options'][index]),
-            );
-          }),
-          SizedBox(height: 20),
-          // Exibe o feedback se houver
-          Text(
-            _feedbackMessage,
-            style: TextStyle(fontSize: 18, color: _feedbackColor),
-            textAlign: TextAlign.center,
-          ),
-        ],
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
