@@ -60,12 +60,19 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/ballon.png
-    - lib/assets/brasileiru.jpeg
-    - lib/assets/comebol.jpeg
-    - lib/assets/lamine.jpeg
-    - lib/assets/league.jpeg
-    - lib/assets/copa.jpeg
+    - lib/assets/N1.jpeg
+    - lib/assets/N2.jpeg
+    - lib/assets/N3.jpeg
+    - lib/assets/N4.jpeg
+    - lib/assets/N5.jpeg
+    - lib/assets/N6.jpeg
+    - lib/assets/N7.jpeg
+    - lib/assets/N8.jpeg
+    - lib/assets/N9.jpeg
+    - lib/assets/N10.jpeg
+    - lib/assets/N.20.jpg
+    - lib/assets/N.BB.jpg
+
     
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
