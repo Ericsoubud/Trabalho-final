@@ -111,7 +111,7 @@ class _QuizPageState extends State<QuizPage> {
       'imagem': 'lib/assets/N6.jpeg',
     },
     {
-      'question': '7- QUANTOS TITULOS NEYMAR JR TEM EM TODA SUA CARREIRA?',
+      'question': '7- QUANTOS TÍTULOS NEYMAR JR TEM EM TODA SUA CARREIRA?',
       'options': ['40', '20', '27', '37'],
       'answer': 3,
       'imagem': 'lib/assets/N7.jpeg',
@@ -123,14 +123,14 @@ class _QuizPageState extends State<QuizPage> {
       'imagem': 'lib/assets/N8.jpeg',
     },
     {
-      'question': '9- QUAL FOI O VALOR ESTIMADO DA TRANSFERÊNCIA DE NEYMAR JR PARA EM 2017, A MAIS CARA DA HISTÓRIA?',
-      'options': ['150 MILHOES DE EUROS', '250 MILHOES DE EUROS', '222 MILHOES DE EUROS', '155 MILHOES DE EUROS'],
+      'question': '9- QUAL FOI O VALOR ESTIMADO DA TRANSFERÊNCIA DE NEYMAR JR EM 2017, A MAIS CARA DA HISTÓRIA?',
+      'options': ['150 MILHÕES DE EUROS', '250 MILHÕES DE EUROS', '222 MILHÕES DE EUROS', '155 MILHÕES DE EUROS'],
       'answer': 2,
       'imagem': 'lib/assets/N9.jpeg',
     },
     {
       'question': '10- QUAL COMPETIÇÃO NEYMAR JR GANHOU COM A SELEÇÃO EM 2013?',
-      'options': ['COPA AMÉRICA', 'COPA DAS CONFEDERAÇÕES', 'ELIMINATORIAS DA COPA', 'COPA DO MUNDO SUB-20'],
+      'options': ['COPA AMÉRICA', 'COPA DAS CONFEDERAÇÕES', 'ELIMINATÓRIAS DA COPA', 'COPA DO MUNDO SUB-20'],
       'answer': 1,
       'imagem': 'lib/assets/N10.jpeg',
     }
@@ -138,7 +138,7 @@ class _QuizPageState extends State<QuizPage> {
 
   void _startTimer() {
     _timeLeft = 15;
-    _timer?.cancel(); 
+    _timer?.cancel();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_timeLeft > 0) {
         setState(() {
@@ -146,7 +146,7 @@ class _QuizPageState extends State<QuizPage> {
         });
       } else {
         _timer?.cancel();
-        _answerQuestion(-1); 
+        _answerQuestion(-1);
       }
     });
   }
@@ -172,7 +172,7 @@ class _QuizPageState extends State<QuizPage> {
           _feedbackMessage = '';
           _timeLeft = 15;
         });
-        _startTimer(); 
+        _startTimer();
       });
 
       if (_currentQuestionIndex >= _questions.length) {
@@ -191,27 +191,44 @@ class _QuizPageState extends State<QuizPage> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
+              _restartQuiz();
+            },
+            child: Text('Reiniciar Quiz'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => QuizPage()),
+                MaterialPageRoute(builder: (context) => HomePage()),
               );
             },
-            child: Text('Tentar Novamente'),
+            child: Text('Voltar ao Início'),
           ),
         ],
       ),
     );
   }
 
+  void _restartQuiz() {
+    setState(() {
+      _currentQuestionIndex = 0;
+      _score = 0;
+      _feedbackMessage = '';
+      _feedbackColor = Colors.black;
+    });
+    _startTimer();
+  }
+
   @override
   void initState() {
     super.initState();
-    _startTimer(); // Start the timer for the first question
+    _startTimer();
   }
 
   @override
   void dispose() {
-    _timer?.cancel(); // Cancel the timer when the page is disposed
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -243,9 +260,19 @@ class _QuizPageState extends State<QuizPage> {
                     style: TextStyle(fontSize: 18, color: const Color.fromARGB(255, 3, 233, 91)),
                   ),
                   SizedBox(height: 20),
-                  Image.network(
-                    'lib/assets/N.BB.jpg',
-                    height: 300,
+                  ElevatedButton(
+                    onPressed: _restartQuiz,
+                    child: Text('Reiniciar Quiz', style: TextStyle(fontSize: 18)),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
+                    child: Text('Voltar ao Início', style: TextStyle(fontSize: 18)),
                   ),
                 ],
               ),
