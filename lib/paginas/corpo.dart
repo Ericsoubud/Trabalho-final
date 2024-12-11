@@ -11,10 +11,10 @@ class _MenteState extends State<Corpo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 245, 233),
+      backgroundColor:  Theme.of(context).colorScheme.background,
        appBar: AppBar(
         elevation: 1,
-        backgroundColor: const Color.fromARGB(255, 255, 245, 233),
+        backgroundColor:  Theme.of(context).colorScheme.background,
         title: Text(
           "Corpo",
           style: TextStyle(

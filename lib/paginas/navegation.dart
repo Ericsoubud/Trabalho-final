@@ -33,9 +33,9 @@ class _NavegationState extends State<Navegation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _paginas[_pag_selecionada], 
-      backgroundColor: const Color.fromARGB(255, 255, 245, 233),
+      backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 255, 245, 233),
+        backgroundColor:  Theme.of(context).colorScheme.background,
         color: Colors.black,
         onTap: _NavigationBarCurved, 
         index: _pag_selecionada, 
